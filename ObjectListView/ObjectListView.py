@@ -189,6 +189,8 @@ class ObjectListView(wx.ListCtrl):
         background. The background colors are controlled by the properties
         `evenRowsBackColor` and `oddRowsBackColor`. This is true by default.
     """
+    
+    PATCHLEVEL = 1
 
     CELLEDIT_NONE = 0
     CELLEDIT_SINGLECLICK = 1
@@ -2152,7 +2154,7 @@ class ObjectListView(wx.ListCtrl):
             self.columns[subItemIndex].SetValue(rowModel, evt.cellValue)
             self.RefreshIndex(rowIndex, rowModel)
 
-        evt = OLVEvent.CellEditFinishedEvent(self, rowIndex, subItemIndex, rowModel, False)
+        evt = OLVEvent.CellEditFinishedEvent(self, rowIndex, subItemIndex, rowModel, evt.IsVetoed())
         self.GetEventHandler().ProcessEvent(evt)
 
         self._CleanupCellEdit()
