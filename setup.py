@@ -51,11 +51,12 @@ CLASSIFIERS = [
     'Topic :: Software Development :: User Interfaces',
 ]
 
-if 'bdist_egg' in sys.argv:
+if 'bdist_egg' in sys.argv or 'develop' in sys.argv:
     try:
         from setuptools import setup
     except ImportError:
-        print "To build an egg setuptools must be installed"
+        print "To build an egg or to install in develop mode setuptools must be installed"
+        sys.exit(1)
 else:
     from distutils.core import setup
 
