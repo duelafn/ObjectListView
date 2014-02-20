@@ -270,6 +270,8 @@ class ObjectListView(wx.ListCtrl):
 
         self.evenRowsBackColor = wx.Colour(240, 248, 255) # ALICE BLUE
         self.oddRowsBackColor = wx.Colour(255, 250, 205) # LEMON CHIFFON
+        
+        self.emptyMessageWhenDisabled = kwargs.pop("emptyMessageWhenDisabled", True)
 
         wx.ListCtrl.__init__(self, *args, **kwargs)
 
@@ -759,7 +761,7 @@ class ObjectListView(wx.ListCtrl):
             wx.ListCtrl.DeleteAllItems(self)
             if len(self.innerList) == 0 or len(self.columns) == 0:
                 self.Refresh()
-                self.stEmptyListMsg.Show()
+                self.stEmptyListMsg.Show(self.IsEnabled() or self.emptyMessageWhenDisabled)
                 return
 
             self.stEmptyListMsg.Hide()
@@ -2190,6 +2192,20 @@ class ObjectListView(wx.ListCtrl):
             self.cellEditor = None
         self.cellBeingEdited = None
         self.SetFocus()
+        
+        
+    def Enable(self, value=True):
+        wx.ListCtrl.Enable(self, value)
+        is_empty = len(self.innerList) == 0 or len(self.columns) == 0
+        if value:
+            self.stEmptyListMsg.Show(is_empty)
+        else:
+            self.stEmptyListMsg.Show(is_empty and self.emptyMessageWhenDisabled)
+        
+    def Disable(self):
+        wx.ListCtrl.Disable(self)
+        is_empty = len(self.innerList) == 0 or len(self.columns) == 0
+        self.stEmptyListMsg.Show(is_empty and self.emptyMessageWhenDisabled)
 
 
 ########################################################################
@@ -2292,7 +2308,7 @@ class AbstractVirtualObjectListView(ObjectListView):
         Change the number of items visible in the list
         """
         wx.ListCtrl.SetItemCount(self, count)
-        self.stEmptyListMsg.Show(count == 0)
+        self.stEmptyListMsg.Show(count == 0 and (self.IsEnabled() or self.emptyMessageWhenDisabled))
         self.lastGetObjectIndex = -1
 
 
