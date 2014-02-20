@@ -740,11 +740,14 @@ class ObjectListView(wx.ListCtrl):
         """
         Give the given row it's correct background color
         """
-        if self.useAlternateBackColors and self.InReportView():
-            if index & 1:
-                item.SetBackgroundColour(self.oddRowsBackColor)
+        if self.InReportView() and self.useAlternateBackColors:
+            if self.IsEnabled():            
+                if index & 1:
+                    item.SetBackgroundColour(self.oddRowsBackColor)
+                else:
+                    item.SetBackgroundColour(self.evenRowsBackColor)
             else:
-                item.SetBackgroundColour(self.evenRowsBackColor)
+                item.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVEBORDER))
 
         if self.rowFormatter is not None:
             self.rowFormatter(item, model)
@@ -2201,11 +2204,13 @@ class ObjectListView(wx.ListCtrl):
             self.stEmptyListMsg.Show(is_empty)
         else:
             self.stEmptyListMsg.Show(is_empty and self.emptyMessageWhenDisabled)
+        self._FormatAllRows()
         
     def Disable(self):
         wx.ListCtrl.Disable(self)
         is_empty = len(self.innerList) == 0 or len(self.columns) == 0
         self.stEmptyListMsg.Show(is_empty and self.emptyMessageWhenDisabled)
+        self._FormatAllRows()
 
 
 ########################################################################
