@@ -190,7 +190,7 @@ class ObjectListView(wx.ListCtrl):
         `evenRowsBackColor` and `oddRowsBackColor`. This is true by default.
     """
     
-    PATCHLEVEL = 1
+    PATCHLEVEL = 2
 
     CELLEDIT_NONE = 0
     CELLEDIT_SINGLECLICK = 1
