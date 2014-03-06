@@ -3555,7 +3555,7 @@ class ColumnDefn(object):
 
     def __init__(self, title="title", align="left", width=-1,
                  valueGetter=None, imageGetter=None, stringConverter=None, valueSetter=None, isEditable=True,
-                 fixedWidth=None, minimumWidth=-1, maximumWidth=-1, isSpaceFilling=False,
+                 fixedWidth=None, minimumWidth=-1, maximumWidth=-1, isSpaceFilling=False, freeSpaceProportion=1,
                  cellEditorCreator=None, autoCompleteCellEditor=False, autoCompleteComboBoxCellEditor=False,
                  checkStateGetter=None, checkStateSetter=None,
                  isSearchable=True, useBinarySearch=None, headerImage=-1,
@@ -3587,7 +3587,7 @@ class ColumnDefn(object):
         self.valueSetter = valueSetter
         self.isSpaceFilling = isSpaceFilling
         self.cellEditorCreator = cellEditorCreator
-        self.freeSpaceProportion = 1
+        self.freeSpaceProportion = freeSpaceProportion
         self.isEditable = isEditable
         self.isSearchable = isSearchable
         self.useBinarySearch = useBinarySearch
