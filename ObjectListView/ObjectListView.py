@@ -2586,7 +2586,7 @@ class FastObjectListView(AbstractVirtualObjectListView):
         FastObjectListView don't sort the items, they sort the model objects themselves.
         """
         selection = self.GetSelectedObjects()
-        self._SortObjects()
+        self._SortObjects(self.innerList)
 
         self.SelectObjects(selection)
         self.RefreshObjects()
